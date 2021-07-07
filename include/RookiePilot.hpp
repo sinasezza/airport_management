@@ -1,13 +1,17 @@
+#include "Pilot.hpp"
 #ifndef ROOKIEPILOT_HPP
 #define ROOKIEPILOT_HPP
 
-class RookiePilot
-{
+class RookiePilot : public Pilot{
  
     public:
         RookiePilot();
-        
-    private:    
+        ~RookiePilot();
+
+        virtual void                SetNumberOfFlights(unsigned short int somedigit) override ;
+        virtual unsigned short int  GetNumberOfFlight() const override;
+    private:   
+        unsigned short int NumberOfFlights; 
 };
 
 

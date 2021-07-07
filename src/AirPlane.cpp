@@ -1,7 +1,18 @@
-#include "../include/Airplane.hpp"
+#include "../include/AirPlane.hpp"
 
-Airplane::Airplane()
+AirPlane::AirPlane()
 {
     //this is default constructor....
 }
 
+//----------------------------------------------------------------
+void AirPlane::SetIdentityCode(std::string something)
+{
+    IdentityCode = something;
+}
+//----------------------------------------------------------------
+std::string AirPlane::GetIdentityCode()
+{
+    return IdentityCode;
+}
+//----------------------------------------------------------------

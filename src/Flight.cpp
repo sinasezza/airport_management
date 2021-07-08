@@ -5,6 +5,14 @@ Flight::Flight(/* args */)
 
 }
 //----------------------------------------------------------
+Flight::Flight(string origin,string destination,string airplane_ID,string pilot_ID)
+{
+    this -> SetOrigin(origin);
+    this -> SetDestination(destination);
+    this -> SetAirPlaneIdentityCode(airplane_ID);
+    this -> SetPilotIdentityCode(pilot_ID);
+}
+//----------------------------------------------------------
 Flight::~Flight()
 {
 
@@ -53,3 +61,10 @@ string  Flight::GetPilotIdentityCode() const
     return this -> PilotIdentityCode;
 }
 //----------------------------------------------------------
+void Flight::PrintInfo()    const
+{
+    cout<<setw(40)<<"Origin"<<" : "<<GetOrigin()<<endl
+        <<setw(40)<<"Destination"<<" : "<<GetDestination()<<endl
+        <<setw(40)<<"AirPlane Identity Code"<<" : "<<GetAirPlaneIdentityCode()<<endl
+        <<setw(40)<<"Pilot Identity Code"<<" : "<<GetPilotIdentityCode()<<endl;
+}

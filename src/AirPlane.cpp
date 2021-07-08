@@ -1,18 +1,22 @@
 #include "../include/AirPlane.hpp"
 
+
 AirPlane::AirPlane()
 {
     //this is default constructor....
 }
-
 //----------------------------------------------------------------
-void AirPlane::SetIdentityCode(std::string something)
+void AirPlane::SetIdentityCode(std::string something) 
 {
-    IdentityCode = something;
+    this -> IdentityCode = something;
 }
 //----------------------------------------------------------------
-std::string AirPlane::GetIdentityCode()
+std::string AirPlane::GetIdentityCode()  const
 {
-    return IdentityCode;
+    return this -> IdentityCode;
 }
 //----------------------------------------------------------------
+void AirPlane::PrintInfo()  const
+{
+    cout<<setw(40)<<"Identity code :"<<GetIdentityCode()<<endl;
+}

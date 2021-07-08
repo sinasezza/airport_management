@@ -6,10 +6,17 @@ class RookiePilot : public Pilot{
  
     public:
         RookiePilot();
+        RookiePilot(std::string lastname,string ID,unsigned short int age,unsigned short int flight_num);
         ~RookiePilot();
 
-        virtual void                SetNumberOfFlights(unsigned short int somedigit) override ;
-        virtual unsigned short int  GetNumberOfFlight() const override;
+        virtual void                SetNumberOfFlights(unsigned short int somedigit)  override;
+        virtual unsigned short int  GetNumberOfFlights() const override ;
+
+        virtual void                SetProfessionalDegree(unsigned short int somedigit) override ;
+        virtual unsigned short int  GetProfessionalDegree() const override ;
+
+        virtual void                PrintInfo() const;
+    
     private:   
         unsigned short int NumberOfFlights; 
 };

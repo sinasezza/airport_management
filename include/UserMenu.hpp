@@ -16,7 +16,6 @@ using std::string;
 
 class UserMenu
 {
-
     public:
         UserMenu();
         ~UserMenu();
@@ -28,15 +27,6 @@ class UserMenu
         void Exit();
         bool Confirm(string some_title);
         void PrintLine(char somechar = '-');
-       
-        void AddAirplane();
-        void DeleteAirplane();
-
-        void AddFlight();
-        void DeleteFlight();
-
-        void AddPilot();
-        void DeletePilot();
 
         void ShowAllFlightsReport();
         void ShowAllAirplanesReport();
@@ -46,16 +36,8 @@ class UserMenu
     
     private:
         AirportManager airportmanager;
-        const  size_t NumberOfAirplanes = 20,NumberOFPilots =10,NumberOFFlights = 8;
-        
+              
 };
-
-
-
-
-
-
-
 
 
 #endif

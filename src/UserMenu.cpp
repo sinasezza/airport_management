@@ -34,11 +34,7 @@ void UserMenu::ShowMenu()
     cout<<setw(60)<<left<<"SHOWING ALL PILOTS"<<"press : 9"<<endl;
     cout<<setw(60)<<left<<"EXIT PROGRAM"<<"press : 0"<<endl;    
 }
-//-----------------------------------------------------------------
-void UserMenu::clear()                                
-{
-    system("clear");
-}
+
 
 //-----------------------------------------------------------------
 int UserMenu::GetOptionFromUser()
@@ -64,22 +60,22 @@ void UserMenu::MenuManager()
             Exit();
             break;
         case 1:
-            AddAirplane();
+            airportmanager.AddAirplane();
             break;
         case 2:   
-            DeleteAirplane();
+            airportmanager.DeleteAirplane();
             break;
         case 3:
-            AddFlight();
+            airportmanager.AddFlight();
             break;
         case 4:
-            DeleteFlight();         
+            airportmanager.DeleteFlight();         
             break;
         case 5:
-            AddPilot();
+            airportmanager.AddPilot();
             break;
         case 6:
-            DeletePilot();
+            airportmanager.DeletePilot();
             break;
         case 7:
             ShowAllFlightsReport();
@@ -95,77 +91,11 @@ void UserMenu::MenuManager()
             cout<<"wrong option inserted\n";
             cout<<"press enter to continue...";
             getch();
-            ShowMenu();
+            //ShowMenu();
         }
+        StateFunc();
     }
 }
-
-
-
-//---------------------------------------------------------------
-void UserMenu::AddAirplane()
-{
-    clear();
-    if(airportmanager.airplane.size() > NumberOfAirplanes)
-        cout<<"We Reach the Maximum Number of Airplane...";
-    else
-    { 
-        size_t TypeNum;
-        string identity_code;
-        double capacity;
-
-        cout << "enter type of Airplane [1 for Cargo,2 for Airliner] : ";
-        cin>>TypeNum;
-
-        cout<<"enter IdentityCode of Airplane : ";
-        cin>>identity_code;
-
-        if(TypeNum == 1)
-        {
-            cout << "enter Maximum tolerable weight (capacity) : ";
-            cin >>capacity;
-            clear();
-            airportmanager.airplane.push_back(new CargoPlane(identity_code,capacity));
-            cout<<"\t\t<your airplane>"<<endl;
-            airportmanager.airplane.back()->PrintInfo();         
-        }
-        else if (TypeNum == 2)
-        {
-            cout << "enter Maximum number of passangers (capacity) : ";
-            cin >>capacity;
-            clear();
-            airportmanager.airplane.push_back(new Airliner(identity_code,capacity));
-            cout<<"\t\t<your airplane>"<<endl;
-            airportmanager.airplane.back()->PrintInfo();       
-        }
-    }
-    StateFunc();
-    
-}
-//-----------------------------------------------------------------
-void UserMenu::DeleteAirplane()
-{
-    clear();
-    string IdentityCode;
-    bool Found = false;
-    cout<<"enter IdentityCode of Airplane : ";
-    cin>>IdentityCode;
-    for(size_t i=0 ; i< airportmanager.airplane.size();i++)
-    {
-        if(IdentityCode == airportmanager.airplane.at(i) ->GetIdentityCode())
-        {
-            Found = true;
-            vector <AirPlane*> :: iterator iter=airportmanager.airplane.begin();
-            airportmanager.airplane.erase(iter+i,iter+1+i);
-            cout<<"deleted ..."<<endl;
-        }
-    }
-    if(Found == false )
-        cout<<"not found ... :/"<<endl;
-    
-    StateFunc();
-}
-
 //-----------------------------------------------------------
 void UserMenu::ShowAllFlightsReport()
 {
@@ -189,8 +119,8 @@ void UserMenu::ShowAllAirplanesReport()
     {
         if(dynamic_cast<Airliner*> (airportmanager.airplane.at(i)) != nullptr)
         {
-             airportmanager.airplane.at(i)->PrintInfo();
-             PrintLine();
+            airportmanager.airplane.at(i)->PrintInfo();
+            PrintLine();
         }       
     }
     
@@ -223,8 +153,7 @@ void UserMenu::ShowAllPilotsReport()
         {
              airportmanager.pilot.at(i)->PrintInfo();
              PrintLine();
-        }
-            
+        }     
     }
     
     PrintLine('=');
@@ -239,135 +168,6 @@ void UserMenu::ShowAllPilotsReport()
              PrintLine();
         }      
     }
-    StateFunc();
-}
-//-------------------------------------------------------------
-void UserMenu::AddFlight()
-{
-    clear();
-    if(airportmanager.flight.size() > NumberOFFlights)
-        cout<<"We Reach the Maximum Number  of Flights...";
-    else
-    { 
-        bool added = false;
-        string origin,destination,airplane_identity,pilot_identity;
-
-        cout<<"enter Origin : ";
-        cin>>origin;
-
-        cout<<"enter destination : ";
-        cin>>destination;
-
-        cout<<"enter Airplane Identity code : ";
-        cin>>airplane_identity;
-
-        cout<<"enter Pilot Identity code : ";
-        cin>>pilot_identity;
-
-        clear();
-
-        airportmanager.flight.push_back(new Flight(origin,destination,airplane_identity,pilot_identity)) ;  
-        cout<<"\t\t<your Flight>"<<endl;  
-        airportmanager.flight.back()->PrintInfo(); 
-    }
-    StateFunc();
-}
-//-------------------------------------------------------------
-void UserMenu::DeleteFlight()
-{
-    clear();
-    string pilot_ID,Airplane_ID;
-    bool Found = false;
-    cout<<"enter IdentityCode of Airplane : ";
-    cin>>Airplane_ID;
-    cout<<"enter IdentityCode of Pilot : ";
-    cin>>pilot_ID;
-    for(size_t i=0 ; i<airportmanager.flight.size();i++)
-    {
-        if(pilot_ID == airportmanager.flight.at(i) ->GetPilotIdentityCode() and
-            Airplane_ID == airportmanager.flight.at(i) -> GetAirPlaneIdentityCode())
-            {
-                Found = true;
-                vector <Flight*> :: iterator iter=airportmanager.flight.begin();
-                airportmanager.flight.erase(iter+i,iter+1+i);
-                cout<<"deleted ..."<<endl;
-            }
-    }
-    if(Found == false )
-        cout<<"not found ... :/"<<endl;
-    
-    StateFunc();
-}
-//-------------------------------------------------------------
-void UserMenu::AddPilot()
-{
-    clear();
-    if(airportmanager.flight.size() > NumberOFFlights)
-        cout<<"We Reach the Maximum Number  of Flights...";
-    else
-    {
-        size_t TypeNum;
-        string identity_code;
-        string  lastname;
-        unsigned short int age;
-        unsigned short int flight_num;
-        unsigned short int degree;
-
-        cout << "enter type of Pilot [1 for Rookie,2 for Professional] : ";
-        cin>>TypeNum;
-
-        cout<<"enter IdentityCode of Pilot : ";
-        cin>>identity_code;
-
-        cout<<"enter Last Name of Pilot : ";
-        cin>>lastname;
-
-        cout<<"enter Age of Pilot : ";
-        cin>>age;
-
-        if(TypeNum == 1)
-        {
-            cout << "enter Number of Flights(since) : ";
-            cin >>flight_num;
-            clear();
-            airportmanager.pilot.push_back(new RookiePilot(lastname,identity_code,age,flight_num));
-            cout<<"\t\t<your airplane>"<<endl;
-            airportmanager.pilot.back()->PrintInfo();         
-        }
-        else if (TypeNum == 2)
-        {
-            cout << "enter Professional Degree : ";
-            cin >>degree;
-            clear();
-            airportmanager.pilot.push_back(new ProfessionalPilot(lastname,identity_code,age,degree));
-            cout<<"\t\t<your airplane>"<<endl;
-            airportmanager.pilot.back()->PrintInfo();      
-        }
-    }
-    StateFunc();
-    
-}
-//-------------------------------------------------------------
-void UserMenu::DeletePilot()
-{
-    clear();
-    string pilot_ID;
-    bool Found = false;
-    cout<<"enter IdentityCode of Pilot : ";
-    cin>>pilot_ID;
-    for(size_t i=0 ; i<airportmanager.pilot.size();i++)
-    {
-        if(pilot_ID == airportmanager.pilot.at(i) ->GetIdentityCode())    
-        {
-            Found = true;
-            vector <Pilot*> :: iterator iter=airportmanager.pilot.begin();
-            airportmanager.pilot.erase(iter+i,iter+1+i);
-            cout<<"deleted ..."<<endl;
-        }
-    }
-    if(Found == false )
-        cout<<"not found ... :/"<<endl;
-    
     StateFunc();
 }
 //-------------------------------------------------------------
@@ -444,4 +244,9 @@ void UserMenu::Exit()
         clear();
         exit(1);
     }
+}
+//-----------------------------------------------------------------
+void UserMenu::clear()                                
+{
+    system("clear");
 }

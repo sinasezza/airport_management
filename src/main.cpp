@@ -7,7 +7,6 @@ using namespace std;
 
 int main()
 {
-    
     UserMenu usermenu;
     usermenu.MenuManager();
     cout << "code executed successfully :)"<<endl;
